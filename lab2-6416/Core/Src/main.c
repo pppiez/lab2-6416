@@ -56,6 +56,8 @@ struct Buffer B[20] = {0};
 
 float temp = 0;
 float mV = 0;
+float average_temp = 0;
+float average_mV = 0;
 
 /* USER CODE END PV */
 
@@ -118,6 +120,20 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	  static uint32_t timestamp = 0;
+	  if(HAL_GetTick() >= timestamp)
+	  {
+		  timestamp = HAL_GetTick() + 1000;
+		  register int i = 0;
+		  for(i = 0; i<20; i++){
+			  temp += (((B[0].TempSensor / 4096.0)*3.3 - 0.76)/0.0025) + 25.0 + 273.0;
+			  mV += (B[0].ADC_IN0/4096.0)*3.3*1000;
+		  }
+		  average_temp = temp/20.0;
+		  average_mV = mV/20.0;
+		  temp = 0;
+		  mV = 0;
+	  }
   }
   /* USER CODE END 3 */
 }
