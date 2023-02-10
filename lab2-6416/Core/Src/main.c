@@ -54,7 +54,8 @@ struct Buffer{
 struct Buffer B[20] = {0};
 
 
-//uint16_t adcRawData[20]; // half word
+float temp = 0;
+float mV = 0;
 
 /* USER CODE END PV */
 
@@ -105,6 +106,8 @@ int main(void)
   MX_USART2_UART_Init();
   MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
+//  ADC_Config();
+	HAL_ADC_Start_DMA(&hadc1, B, 20);
 
   /* USER CODE END 2 */
 
@@ -214,6 +217,7 @@ static void MX_ADC1_Init(void)
 
   /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
   */
+  sConfig.Channel = ADC_CHANNEL_TEMPSENSOR;
   sConfig.Rank = 2;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
@@ -308,6 +312,7 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
 
 /* USER CODE END 4 */
 
