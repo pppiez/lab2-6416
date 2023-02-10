@@ -45,6 +45,16 @@ DMA_HandleTypeDef hdma_adc1;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
+// half word
+struct Buffer{
+	uint16_t ADC_IN0;
+	uint16_t TempSensor;
+};
+
+struct Buffer B[20] = {0};
+
+
+//uint16_t adcRawData[20]; // half word
 
 /* USER CODE END PV */
 
