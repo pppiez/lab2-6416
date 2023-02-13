@@ -53,11 +53,11 @@ struct Buffer{
 
 struct Buffer B[20] = {0};
 
-
-float temp = 0;
-float mV = 0;
-float average_temp = 0;
-float average_mV = 0;
+uint32_t count = 0;
+uint16_t temp = 0;
+uint16_t mV = 0;
+uint16_t average_temp = 0;
+uint16_t average_mV = 0;
 
 /* USER CODE END PV */
 
@@ -108,9 +108,8 @@ int main(void)
   MX_USART2_UART_Init();
   MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
-//  ADC_Config();
-	HAL_ADC_Start_DMA(&hadc1, B, 20);
 
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)B, 20);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -124,16 +123,18 @@ int main(void)
 	  if(HAL_GetTick() >= timestamp)
 	  {
 		  timestamp = HAL_GetTick() + 1000;
-		  register int i = 0;
-		  for(i = 0; i<20; i++){
-			  temp += (((B[0].TempSensor / 4096.0)*3.3 - 0.76)/0.0025) + 25.0 + 273.0;
-			  mV += (B[0].ADC_IN0/4096.0)*3.3*1000;
-		  }
-		  average_temp = temp/20.0;
-		  average_mV = mV/20.0;
-		  temp = 0;
-		  mV = 0;
 	  }
+	  register int i = 0;
+	  for(i = 0; i<20; i++){
+		  temp = temp + B[i].TempSensor;
+		  mV = mV + B[i].ADC_IN0;
+		  count = count + 1;
+	  }
+	  average_temp = temp/20;
+	  average_mV = (mV*3.3*1000*2/4096)/20; // V to mV
+	  temp = 0;
+	  mV = 0;
+//	  }
   }
   /* USER CODE END 3 */
 }
