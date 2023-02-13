@@ -131,7 +131,11 @@ int main(void)
 
 //	  temp = temp/20;
 	  average_temp =((((((temp/20)*3.3)/4095)-0.76)/2.5)+25)+273;
-	  average_mV = (mV*3.3*1000*2/4096)/20; // V to mV
+	  average_mV = ((mV/20)*3.3/4096)*1000*2; // V to mV
+
+//	  Vin_mV = ((AVG_voltage*3.3)/4095)*1000*2;
+
+
 	  temp = 0;
 	  mV = 0;
 //	  }
