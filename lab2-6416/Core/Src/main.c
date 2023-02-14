@@ -129,11 +129,9 @@ int main(void)
 		  mV = mV + B[i].ADC_IN0;
 	  }
 
-//	  temp = temp/20;
 	  average_temp =((((((temp/20)*3.3)/4095)-0.76)/2.5)+25)+273;
 	  average_mV = ((mV/20)*3.3/4096)*1000*2; // V to mV
 
-//	  Vin_mV = ((AVG_voltage*3.3)/4095)*1000*2;
 
 
 	  temp = 0;

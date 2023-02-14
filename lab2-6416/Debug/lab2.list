@@ -1093,7 +1093,6 @@ int main(void)
  8000d28:	dde9      	ble.n	8000cfe <main+0x46>
 	  }
 
-//	  temp = temp/20;
 	  average_temp =((((((temp/20)*3.3)/4095)-0.76)/2.5)+25)+273;
  8000d2a:	4b4c      	ldr	r3, [pc, #304]	; (8000e5c <main+0x1a4>)
  8000d2c:	881b      	ldrh	r3, [r3, #0]
@@ -1193,7 +1192,6 @@ int main(void)
  8000e18:	4b18      	ldr	r3, [pc, #96]	; (8000e7c <main+0x1c4>)
  8000e1a:	801a      	strh	r2, [r3, #0]
 
-//	  Vin_mV = ((AVG_voltage*3.3)/4095)*1000*2;
 
 
 	  temp = 0;
