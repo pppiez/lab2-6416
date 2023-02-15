@@ -53,10 +53,11 @@ struct Buffer{
 
 struct Buffer B[20] = {0};
 
-uint16_t temp = 0;
-uint16_t mV = 0;
-uint16_t average_temp = 0;
-uint16_t average_mV = 0;
+uint32_t temp = 0;
+uint32_t mV = 0;
+uint32_t average_temp = 0;
+uint32_t temp_cal = 0;
+uint32_t average_mV = 0;
 
 /* USER CODE END PV */
 
@@ -124,16 +125,19 @@ int main(void)
 		  timestamp = HAL_GetTick() + 1000;
 	  }
 	  register int i = 0;
-	  for(i = 0; i<10; i++){
-		  temp = temp + B[i].TempSensor;
-		  mV = mV + B[i].ADC_IN0;
+	  for(i = 0; i<20; i++){
+		  temp = temp + (((B[i].TempSensor)*3.3*1000)/4095);
+		  mV = mV + ((B[i].ADC_IN0)*3.3*1000/4095);
 	  }
 
-	  average_temp =((((((temp/20)*3.3)/4095)-0.76)/2.5)+25)+273;
-	  average_mV = ((mV/20)*3.3/4096)*1000*2; // V to mV
 
+	  temp = temp/20;
+	  average_temp = ((temp - 760)/2.5) + 25;
 
+	  mV = mV*2; // V to mV
+	  average_mV = mV/20;
 
+	  // reset
 	  temp = 0;
 	  mV = 0;
 //	  }
@@ -228,7 +232,7 @@ static void MX_ADC1_Init(void)
   */
   sConfig.Channel = ADC_CHANNEL_0;
   sConfig.Rank = 1;
-  sConfig.SamplingTime = ADC_SAMPLETIME_84CYCLES;
+  sConfig.SamplingTime = ADC_SAMPLETIME_480CYCLES;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
