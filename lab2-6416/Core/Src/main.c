@@ -132,7 +132,7 @@ int main(void)
 
 
 	  temp = temp/20;
-	  average_temp = ((temp - 760)/2.5) + 25;
+	  average_temp = ((temp - 760)/2.5) + 25 + 273;
 
 	  mV = mV*2; // V to mV
 	  average_mV = mV/20;
