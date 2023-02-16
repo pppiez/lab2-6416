@@ -126,8 +126,8 @@ int main(void)
 	  }
 	  register int i = 0;
 	  for(i = 0; i<20; i++){
-		  temp = temp + (((B[i].TempSensor)*3.3*1000)/4095);
-		  mV = mV + ((B[i].ADC_IN0)*3.3*1000/4095);
+		  temp = temp + (((B[i].TempSensor)*3.3*1000)/4096);
+		  mV = mV + ((B[i].ADC_IN0)*3.3*1000/4096);
 	  }
 
 
